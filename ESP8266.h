@@ -13,6 +13,7 @@
 #include <AltSoftSerial.h>
 
 typedef int (*DataCallback)(char *);
+typedef int (*DebugCallback)(char *);
 typedef void (*ConnectCallback)(void);
 
 enum wifiModes {
@@ -36,7 +37,7 @@ class ESP8266
     ESP8266(int mode = 1, long baudrate = 9600, int debugLevel = 0);
     
     // init / connect / disconnect access point
-    int initializeWifi(DataCallback dcb, ConnectCallback ccb);
+    int initializeWifi(DataCallback dcb, DebugCallback debugcb, ConnectCallback ccb);
     int connectWifi(char *ssid, char *password);
     bool disconnectWifi();
     

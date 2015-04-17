@@ -27,6 +27,7 @@ long _beaconInterval;
 long _previousMillis;
 int _replyChan;
 DataCallback _dcb;
+DebugCallback _debugcb;
 ConnectCallback _ccb;
 char _wb[BUFFER_SIZE];
 int _wctr = 0;
@@ -52,11 +53,15 @@ ESP8266::ESP8266(int mode, long baudrate, int debugLevel)
   _connected = false;
 }
 
-int ESP8266::initializeWifi(DataCallback dcb, ConnectCallback ccb)
+int ESP8266::initializeWifi(DataCallback dcb, DebugCallback debugcb, ConnectCallback ccb)
 {
   
   if (dcb) {
     _dcb = dcb;
+  }
+
+  if (debugcb) {
+    _debugcb = debugcb;
   }
   
   if (ccb) {
@@ -453,8 +458,8 @@ bool ESP8266::getBroadcast() {
 }
 
 void ESP8266::debug(char *msg) {
-  if (_dcb && (_debugLevel > 0)) {
-    _dcb(msg);
+  if (_debugcb && (_debugLevel > 0)) {
+    _debugcb(msg);
   } 
 }
 
