@@ -10,7 +10,7 @@
 #ifndef ESP8266_h
 #define ESP8266_h
 
-#include <AltSoftSerial.h>
+//#include <AltSoftSerial.h>
 
 typedef int (*DataCallback)(char *);
 typedef int (*DebugCallback)(char *);
