@@ -81,7 +81,7 @@ int ESP8266::initializeWifi(DataCallback dcb, ConnectCallback ccb)
   // reset WiFi module
   wifi.println(F("AT+RST"));
   delay(500);
-  if(!searchResults("Ready", 5000, _debugLevel)) {
+  if(!searchResults("ready", 5000, _debugLevel)) {
     return WIFI_ERR_RESET;
   }
   
