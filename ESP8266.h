@@ -10,8 +10,6 @@
 #ifndef ESP8266_h
 #define ESP8266_h
 
-//#include <AltSoftSerial.h>
-
 typedef int (*DataCallback)(char *);
 typedef int (*DebugCallback)(char *);
 typedef void (*ConnectCallback)(void);
@@ -45,7 +43,8 @@ class ESP8266
     bool startServer(int port = 8000, long timeout = 300);
     
     // client
-    bool startClient(char *ip, int port, long timeout = 300);
+    bool startUDPClient(char *ip, int port, long timeout = 300);
+    bool startTCPClient(char *ip, int port, long timeout = 300);
     
     // discovery beacon
     bool enableBeacon(char *device);

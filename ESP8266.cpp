@@ -246,7 +246,24 @@ bool ESP8266::startServer(int port, long timeout)
   return true;
 }
 
-bool ESP8266::startClient(char *ip, int port, long timeout)
+bool ESP8266::startUDPClient(char *ip, int port, long timeout)
+{
+  wifi.print(F("AT+CIPSTART="));
+  wifi.print(CLI_CHAN);
+  wifi.print(F(",\"UDP\",\""));
+  wifi.print(ip);
+  wifi.print("\",");
+  wifi.println(port);
+  delay(100);
+  if(!searchResults("OK", timeout, _debugLevel)) {
+    return false;
+  }
+  
+  _connectMode = CONNECT_MODE_CLIENT;
+  return true;
+}
+
+bool ESP8266::startTCPClient(char *ip, int port, long timeout)
 {
   wifi.print(F("AT+CIPSTART="));
   wifi.print(CLI_CHAN);
@@ -262,6 +279,8 @@ bool ESP8266::startClient(char *ip, int port, long timeout)
   _connectMode = CONNECT_MODE_CLIENT;
   return true;
 }
+
+
 
 char *ESP8266::ip()
 {
@@ -358,7 +377,7 @@ bool ESP8266::sendData(int chan, char *data) {
   wifi.println(strlen(data));
   
   // send the data
-  wifi.println(data);
+  wifi.print(data);
   
   delay(50);
   
