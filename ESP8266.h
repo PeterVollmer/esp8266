@@ -43,7 +43,8 @@ class ESP8266 {
 
   // client
 
-  bool startClient(char* ip, int port, long timeout = 300);
+  bool startTCPClient(char* ip, int port, long timeout = 300);
+  bool startUDPClient(char* ip, int port, long timeout = 300);
 
   // discovery beacon
   bool enableBeacon(char* device);
@@ -308,7 +309,24 @@ bool ESP8266<S>::startServer(int port, long timeout) {
 }
 
 template <typename S>
-bool ESP8266<S>::startClient(char* ip, int port, long timeout) {
+bool ESP8266<S>::startTCPClient(char* ip, int port, long timeout) {
+  wifi.print(F("AT+CIPSTART="));
+  wifi.print(CLI_CHAN);
+  wifi.print(F(",\"TCP\",\""));
+  wifi.print(ip);
+  wifi.print("\",");
+  wifi.println(port);
+  delay(100);
+  if (!searchResults("OK", timeout, _debugLevel)) {
+    return false;
+  }
+
+  _connectMode = CONNECT_MODE_CLIENT;
+  return true;
+}
+
+template <typename S>
+bool ESP8266<S>::startUDPClient(char* ip, int port, long timeout) {
   wifi.print(F("AT+CIPSTART="));
   wifi.print(CLI_CHAN);
   wifi.print(F(",\"UDP\",\""));
