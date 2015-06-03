@@ -13,7 +13,7 @@
 //#include <AltSoftSerial.h>
 
 typedef int (*DataCallback)(char*);
-typedef int (*DebugCallback)(char*);
+typedef int (*DebugCallback)(const char*);
 typedef void (*ConnectCallback)(void);
 
 enum wifiModes { WIFI_MODE_STA = 1, WIFI_MODE_AP, WIFI_MODE_APSTA };
