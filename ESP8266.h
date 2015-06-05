@@ -12,7 +12,7 @@
 
 //#include <AltSoftSerial.h>
 
-typedef int (*DataCallback)(char*);
+typedef int (*DataCallback)(const char*);
 typedef int (*DebugCallback)(const char*);
 typedef void (*ConnectCallback)(void);
 
